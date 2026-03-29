@@ -3,7 +3,7 @@ import { slice } from './reducer';
 export const { 
     setIsAuth, 
     setName,
-    setSurame, 
+    setSurname, 
     setLogin, 
     setAge, 
     setCountry, 

@@ -7,16 +7,23 @@ import { Button,
          Stack } from '@mui/material';
 import { colors } from '../ui/Colors';
 import { Nav } from './NavLogin';
+import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { registerUser } from '../utils/userThunks';
+import { AppDispatch } from '../store';
 
 interface InputFormData {
     login: string, 
     name: string,
+    surname: string,
     password: string,
 }
 
 export const SignUpPage = () => {
+    const navigate = useNavigate();
+    const dispatch = useDispatch<AppDispatch>();
     const [inputData, setInputData] = useState<InputFormData>({
-        login: '', name: '', password: '',
+        login: '', name: '', surname: '', password: '',
     });
 
     const handleChange = (e : React.ChangeEvent<HTMLInputElement>) => {
@@ -24,8 +31,19 @@ export const SignUpPage = () => {
         setInputData(prev => ({...prev, [name] : value}));
     };
 
-    const handleSubmit = (e : React.FormEvent<HTMLFormElement>) => {
+    const handleSubmit = async (e : React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
+        try{
+            // const data = userService.registerUser(inputData.login, inputData.name, inputData.surname, inputData.password);
+            // dispatch(setIsAuth(true));
+            // dispatch(setLogin(inputData.login));
+            // dispatch(setName(inputData.name));
+            // dispatch(setSurname(inputData.surname));
+            await dispatch(registerUser(inputData.login, inputData.name, inputData.surname, inputData.password));
+            navigate('/dashboard');
+        } catch (error) {
+            console.error(error);
+        }
     };
 
     return (
@@ -77,7 +95,7 @@ export const SignUpPage = () => {
                     <TextField 
                         type='text' 
                         placeholder='Фамилия' 
-                        name='name'
+                        name='surname'
                         required
                         variant='outlined'
                         onChange={handleChange}

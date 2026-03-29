@@ -12,7 +12,7 @@ interface userStoreInterface {
 }
 
 export const initialState : userStoreInterface = {
-    isAuth: true,
+    isAuth: false,
     user: {
         name: 'имя',
         surname: 'фамилия',

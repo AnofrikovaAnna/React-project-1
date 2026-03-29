@@ -26,12 +26,4 @@ export const slice = createSlice({
         },
     },
 });
-
-// export const competitionId = (state: AppState) => state.competitionStore.id;
-// export const competitionNumOfTasks = (state: AppState) => state.competitionStore.numOfTasks;
-// export const competitionDuration = (state: AppState) => state.competitionStore.duration;
-// export const competitionIsEnded = (state: AppState) => state.competitionStore.isEnded;
-// export const competitionName = (state: AppState) => state.competitionStore.name;
-// export const competitionDate = (state: AppState) => state.competitionStore.date;
-
 export const competitionSelector = (state: AppState) => state.competitionStore;

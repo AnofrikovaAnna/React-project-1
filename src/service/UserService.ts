@@ -1,14 +1,13 @@
-import axios from "axios";
-
-const MAIN_URL = 'https://localgost:3000/api';
+import { apiClient } from "../api/axios";
 
 const loginUser = async (login: string, password: string) => {
     const params = {
         'login': login,
         'password': password,
     };
-    const res = await axios.post(`${MAIN_URL}`, {params});
-    return res;
+    const res = await apiClient.post('/signin', params);
+    console.log(res);
+    return res.data;
 };
 
 const registerUser = async (login: string, name: string, surname: string, password: string) => {
@@ -18,8 +17,10 @@ const registerUser = async (login: string, name: string, surname: string, passwo
         'surname' : surname,
         'password': password,
     };
-    const res = await axios.put(`${MAIN_URL}`, {params});
-    return res;
+    const res = await apiClient.post('/signup', params);
+    console.log(res);
+    return res.data;
+    
 };
 
 export const userService = {

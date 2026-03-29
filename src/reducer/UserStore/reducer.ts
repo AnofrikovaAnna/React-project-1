@@ -12,7 +12,7 @@ export const slice = createSlice({
         setName: (state, action: PayloadAction<string>) => {
             state.user.name = action.payload;
         },
-        setSurame: (state, action: PayloadAction<string>) => {
+        setSurname: (state, action: PayloadAction<string>) => {
             state.user.surname = action.payload;
         },
         setLogin: (state, action: PayloadAction<string>) => {
@@ -33,5 +33,5 @@ export const slice = createSlice({
     },
 });
 
-export const userAuthSelector = (state: AppState) => state.UserStore.isAuth;
-export const userSelector = (state: AppState) => state.UserStore.user;
+export const userAuthSelector = (state: AppState) => state.userStore.isAuth;
+export const userSelector = (state: AppState) => state.userStore.user;

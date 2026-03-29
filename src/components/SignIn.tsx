@@ -8,6 +8,9 @@ import { Button,
 import { colors } from '../ui/Colors';
 import { Nav } from './NavLogin';
 import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import { loginUser } from '../utils/userThunks';
+import { AppDispatch } from '../store';
 
 interface InputFormData {
     login: string, 
@@ -15,7 +18,8 @@ interface InputFormData {
 }
 
 export const SignInPage = () => {
-    const dispatch = useDispatch();
+    const navigate = useNavigate();
+    const dispatch = useDispatch<AppDispatch>();
     const [inputData, setInputData] = useState<InputFormData>({
         login: '', password: '',
     });
@@ -25,8 +29,17 @@ export const SignInPage = () => {
         setInputData(prev => ({...prev, [name] : value}));
     };
 
-    const handleSubmit = (e : React.FormEvent<HTMLFormElement>) => {
+    const handleSubmit = async (e : React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
+        try{
+            // const data = userService.loginUser(inputData.login, inputData.password);
+            // dispatch(setIsAuth(true));
+            // dispatch(setLogin(inputData.login));
+            await dispatch(loginUser(inputData.login, inputData.password));
+            navigate('/dashboard');
+        } catch (error) {
+            console.error(error);
+        }
     };
 
     return (
