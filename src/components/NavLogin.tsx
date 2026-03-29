@@ -17,16 +17,7 @@ export const Nav = () => {
                 fontSize: '18px',
             }}>
             <AppBar position='static'>
-                <Toolbar>
-                    {/* <NavLink to="/" style={{ color: colors.text.light, borderColor: colors.border, }}>
-                        На главную
-                    </NavLink>
-                    <NavLink to="/signin" style={{ color: colors.text.light, borderColor: colors.border, }}>
-                        Войти
-                    </NavLink>
-                    <NavLink to="/signup" style={{ color: colors.text.light, borderColor: colors.border, }}>
-                        Зарегистрироваться
-                    </NavLink> */}
+                <Toolbar sx={{gap:'10px',}}>
                     <Button> 
                         <NavLink to="/" 
                                  style={ ({isActive}) => 

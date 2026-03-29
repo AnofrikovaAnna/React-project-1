@@ -1,11 +1,13 @@
 import React from 'react';
-import { NavLink } from 'react-router-dom';
 import { Box,
          Typography} from '@mui/material';
 import { colors } from '../ui/Colors';
-import { Nav } from './Nav';
+import { Nav } from './NavLogin';
+import { competitionSelector } from '../reducer/CompetitionStore/reducer';
+import { useSelector } from 'react-redux';
 
 export const HomePage = () => {
+    const competition = useSelector(competitionSelector);
     return (
         <Box
             sx={{
@@ -19,17 +21,18 @@ export const HomePage = () => {
             <Nav></Nav>
             <Box
                 alignSelf='center'
-                justifyItems='center'>
+                justifySelf='center'>
                 <Typography
                         component="h1"
                         variant="h4"
                         sx={{ fontSize: '60px', 
                               color: colors.primary.main,
-                              width: '55%'
+                              width: '100%',
                         }}
                     >
-                        Сайт медицинского персонала больницы №101
+                        Соревнования по программированию
                 </Typography>
+
             </Box>
         </Box>
     );

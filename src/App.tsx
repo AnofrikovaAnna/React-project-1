@@ -8,30 +8,26 @@ import { ProfilePage } from './components/Profile';
 import { AuthWrapper } from './components/AuthWrapper';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { Provider } from 'react-redux';
-import { store } from './redux/store';
+import { store } from './store';
 
 function App() {
   return (
-    <div className="App">
+    <main className="App">
       <Provider store={store}>
+        <AuthWrapper>
           <Router>
             <Routes>
               <Route path='/' element={<HomePage />} />
               <Route path='/signin' element={<SignInPage />} />
               <Route path='/signup' element={<SignUpPage />} />
-              <Route path='/dashboard' element={
-                <AuthWrapper>
-                  <LayOutPage />
-                </AuthWrapper>} />
-              <Route path='/profile' element={
-                <AuthWrapper>
-                  <ProfilePage />
-                </AuthWrapper>} />
+              <Route path='/dashboard' element={<LayOutPage />} />
+              <Route path='/profile' element={<ProfilePage />} />
               <Route path="*" element={<div>Страница не найдена</div>} />
             </Routes>
           </Router>
+        </AuthWrapper>
       </Provider>
-    </div>
+    </main>
   );
 }
 

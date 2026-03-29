@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { Button, 
          TextField,
          Box,
@@ -7,7 +6,8 @@ import { Button,
          Typography,
          Stack } from '@mui/material';
 import { colors } from '../ui/Colors';
-import { Nav } from './Nav';
+import { Nav } from './NavLogin';
+import { useDispatch } from 'react-redux';
 
 interface InputFormData {
     login: string, 
@@ -15,7 +15,7 @@ interface InputFormData {
 }
 
 export const SignInPage = () => {
-    const navigate = useNavigate();
+    const dispatch = useDispatch();
     const [inputData, setInputData] = useState<InputFormData>({
         login: '', password: '',
     });
@@ -27,7 +27,6 @@ export const SignInPage = () => {
 
     const handleSubmit = (e : React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        navigate('/profile');
     };
 
     return (
