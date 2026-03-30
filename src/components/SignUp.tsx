@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Button, 
          TextField,
          Box,
@@ -9,7 +9,7 @@ import { colors } from '../ui/Colors';
 import { Nav } from './NavLogin';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { registerUser } from '../utils/userThunks';
+import { getUser, registerUser } from '../utils/userThunks';
 import { AppDispatch } from '../store';
 import { userAuthSelector } from '../reducer/UserStore/reducer';
 
@@ -38,12 +38,17 @@ export const SignUpPage = () => {
         localStorage.setItem('pd', 'good');
         try{
             await dispatch(registerUser(inputData.login, inputData.name, inputData.surname, inputData.password));
-            if (isAuth)
-                navigate('/dashboard');
         } catch (error) {
             console.error(error);
         }
     };
+
+    useEffect(() => {
+        if (isAuth) {
+            navigate('/dashboard');
+            dispatch(getUser(inputData.login));
+        }
+    }, [isAuth, navigate]);
 
     return (
         <Box

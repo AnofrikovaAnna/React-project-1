@@ -7,6 +7,9 @@ export const {
     setName,
     setDate, 
     setIsEnded,
+    setCompetition,
+    setUserId,
+    clearCompetition,
 } = slice.actions;
 
 export default slice.reducer;

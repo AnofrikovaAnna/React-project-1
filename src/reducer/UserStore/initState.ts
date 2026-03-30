@@ -1,4 +1,5 @@
 interface userStoreInterface {
+    id: number;
     isAuth: boolean;
     user: {
         name: string;
@@ -12,6 +13,7 @@ interface userStoreInterface {
 }
 
 export const initialState : userStoreInterface = {
+    id: NaN,
     isAuth: false,
     user: {
         name: 'имя',

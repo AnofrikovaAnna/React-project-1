@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Button, 
          TextField,
          Box,
@@ -9,7 +9,7 @@ import { colors } from '../ui/Colors';
 import { Nav } from './NavLogin';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { loginUser } from '../utils/userThunks';
+import { getUser, loginUser } from '../utils/userThunks';
 import { AppDispatch } from '../store';
 import { userAuthSelector } from '../reducer/UserStore/reducer';
 
@@ -35,12 +35,17 @@ export const SignInPage = () => {
         e.preventDefault();
         try{
             await dispatch(loginUser(inputData.login, inputData.password));
-            if (isAuth)
-                navigate('/dashboard');
         } catch (error) {
             console.error(error);
         }
     };
+
+    useEffect(() => {
+        if (isAuth) {
+            navigate('/dashboard');
+            dispatch(getUser(inputData.login));
+        }
+    }, [isAuth, navigate]);
 
     return (
         <Box

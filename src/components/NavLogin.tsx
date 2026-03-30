@@ -2,7 +2,6 @@ import React from 'react';
 import { NavLink } from 'react-router-dom';
 import { Box, Button, AppBar, Toolbar } from '@mui/material';
 import { colors } from '../ui/Colors';
-import { text } from 'stream/consumers';
 
 export const Nav = () => {
     return (

@@ -30,8 +30,30 @@ export const slice = createSlice({
         setStudyPlace: (state, action: PayloadAction<string>) => {
             state.user.studyPlace = action.payload;
         },
+        setUser: (state, action: PayloadAction<{
+            id: number,
+            name: string,
+            surname: string,
+            login: string,
+            age: number,
+            country: string,
+            city: string,
+            studyPlace: string}>) => {
+            if (state.user.login !== action.payload.login)
+                state.user.login = action.payload.login;
+            state.user.name = action.payload.name;
+            state.user.surname = action.payload.surname;
+            state.user.age = action.payload.age;
+            state.user.country = action.payload.country;
+            state.user.city = action.payload.city;
+            state.user.studyPlace = action.payload.studyPlace;
+        },
+        setId : (state, action: PayloadAction<number>) => {
+            state.id = action.payload;
+        },
     },
 });
 
 export const userAuthSelector = (state: AppState) => state.userStore.isAuth;
+export const userIdSelector = (state: AppState) => state.userStore.id;
 export const userSelector = (state: AppState) => state.userStore.user;

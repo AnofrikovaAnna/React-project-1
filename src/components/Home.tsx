@@ -8,6 +8,7 @@ import { useSelector } from 'react-redux';
 
 export const HomePage = () => {
     const competition = useSelector(competitionSelector);
+    
     return (
         <Box
             sx={{

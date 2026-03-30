@@ -9,6 +9,8 @@ export const {
     setCountry, 
     setCity, 
     setStudyPlace,
+    setUser,
+    setId,
 } = slice.actions;
 
 export default slice.reducer;

@@ -5,6 +5,9 @@ import { SignInPage } from './components/SignIn';
 import { SignUpPage } from './components/SignUp';
 import { LayOutPage } from './components/LayOut';
 import { ProfilePage } from './components/Profile';
+import { MakeCompetitionPage } from './components/MakeCompetition';
+import { CompetitionPage } from './components/Competitions';
+import { UserCompetitionPage } from './components/UserCompetition';
 import { AuthWrapper } from './components/AuthWrapper';
 import { CommonWrapper } from './components/CommonWrapper'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
@@ -24,6 +27,9 @@ function App() {
                 <Route path='/signup' element={<SignUpPage />} />
                 <Route path='/dashboard' element={<LayOutPage />} />
                 <Route path='/profile' element={<ProfilePage />} />
+                <Route path='/newcompetition' element={<MakeCompetitionPage />} />
+                <Route path='/competitions' element={<CompetitionPage />} />
+                <Route path='/usercompetitions' element={<UserCompetitionPage />} />
                 <Route path="*" element={<div>Страница не найдена</div>} />
               </Routes>
             </Router>

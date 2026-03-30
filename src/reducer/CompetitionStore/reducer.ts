@@ -1,6 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { AppState } from '../../store';
 import { initialState } from './initState';
+import { clearCompetition } from '../UserCompetitionStore';
 
 export const slice = createSlice({
     name: 'competitionStore',
@@ -23,6 +24,24 @@ export const slice = createSlice({
         },
         setDate: (state, action: PayloadAction<string>) => {
             state.date = action.payload;
+        },
+        setCompetition: (state, action: PayloadAction<{name: string, date: string, duration: number, numOfTasks: number}>) => {
+            state.name = action.payload.name;
+            state.date = action.payload.date;
+            state.duration = action.payload.duration;
+            state.numOfTasks = action.payload.numOfTasks;
+        },
+        setUserId: (state, action: PayloadAction<number>) => {
+            state.userId = action.payload;
+        },
+        clearCompetition: (state) => {
+            state.name = '';
+            state.date = '';
+            state.duration = 0;
+            state.numOfTasks = 0;
+            state.id = -1;
+            state.userId = -1;
+            state.isEnded = false;
         },
     },
 });

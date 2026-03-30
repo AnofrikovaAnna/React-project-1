@@ -1,10 +1,11 @@
-interface competitionStoreInterface {
+export interface competitionStoreInterface {
     id: number;
     name: string;
     date: string;
     numOfTasks: number;
     duration: number;
     isEnded: boolean;
+    userId: number;
 }
 
 export const initialState : competitionStoreInterface = {
@@ -14,4 +15,5 @@ export const initialState : competitionStoreInterface = {
     numOfTasks: 0,
     duration: 0,
     isEnded: false,
+    userId: -1,
 };

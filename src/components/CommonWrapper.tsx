@@ -33,7 +33,7 @@ export const CommonWrapper : React.FC<CommonWrapperProps> = ({children}) => {
                 onClose={onClose}
                 disableRestoreFocus 
             >
-                <DialogTitle>Ошибка</DialogTitle>
+                <DialogTitle sx={{margin: 'auto',}}>Ошибка</DialogTitle>
                 <DialogContent>
                     <DialogContentText>
                         {setting.errorName}

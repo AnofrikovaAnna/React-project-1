@@ -10,3 +10,14 @@ CREATE TABLE IF NOT EXISTS users (
     study_place TEXT NOT NULL DEFAULT "",
     password TEXT NOT NULL DEFAULT "",
 );
+
+CREATE TABLE IF NOT EXISTS competitions (
+    id INTEGER PRIMARY KEY NOT NULL,
+    num_of_tasks INTEGER NOT NULL,
+    duration INTEGER NOT NULL,
+    name TEXT NOT NULL,
+    date TEXT NOT NULL,
+    is_ended BOOLEAN NOT NULL DEFAULT 0,
+    user_id INTEGER NOT NULL
+);
+
