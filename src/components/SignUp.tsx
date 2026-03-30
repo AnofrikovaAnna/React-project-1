@@ -8,9 +8,10 @@ import { Button,
 import { colors } from '../ui/Colors';
 import { Nav } from './NavLogin';
 import { useNavigate } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { registerUser } from '../utils/userThunks';
 import { AppDispatch } from '../store';
+import { userAuthSelector } from '../reducer/UserStore/reducer';
 
 interface InputFormData {
     login: string, 
@@ -22,6 +23,7 @@ interface InputFormData {
 export const SignUpPage = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch<AppDispatch>();
+    const isAuth = useSelector(userAuthSelector);
     const [inputData, setInputData] = useState<InputFormData>({
         login: '', name: '', surname: '', password: '',
     });
@@ -33,14 +35,11 @@ export const SignUpPage = () => {
 
     const handleSubmit = async (e : React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
+        localStorage.setItem('pd', 'good');
         try{
-            // const data = userService.registerUser(inputData.login, inputData.name, inputData.surname, inputData.password);
-            // dispatch(setIsAuth(true));
-            // dispatch(setLogin(inputData.login));
-            // dispatch(setName(inputData.name));
-            // dispatch(setSurname(inputData.surname));
             await dispatch(registerUser(inputData.login, inputData.name, inputData.surname, inputData.password));
-            navigate('/dashboard');
+            if (isAuth)
+                navigate('/dashboard');
         } catch (error) {
             console.error(error);
         }

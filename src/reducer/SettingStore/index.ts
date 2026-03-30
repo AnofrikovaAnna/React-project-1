@@ -4,7 +4,10 @@ export const {
     setIsError, 
     setErrorName,
     setErrorNum,
-    clearError,
+    clearSetting,
+    setLoading,
+    clearLoading,
+    setError,
 } = slice.actions;
 
 export default slice.reducer;

@@ -27,23 +27,29 @@ apiClient.interceptors.request.use(
 
 apiClient.interceptors.response.use(
     (response) => {
-        return response.data;
+        return response;
     },
     async (error) => {
-        const originalRequest = error.config;
-        if (error.response?.status === 401 && !originalRequest._retry) {
-            originalRequest._retry = true;
-            try {
-                const refreshToken = localStorage.getItem('refreshToken');
-                const { data } = await axios.post('/api/auth/refresh', { refreshToken });
-                localStorage.setItem('token', data.token);
-                originalRequest.headers.Authorization = `Bearer ${data.token}`;
-                return apiClient(originalRequest);
-            } catch (refreshError) {
-                localStorage.clear();
-                window.location.href = '/signin';
-                return Promise.reject(refreshError);
-            }
+        //const originalRequest = error.config;
+        // if (error.response?.status === 401 && !originalRequest._retry) {
+        //     originalRequest._retry = true;
+        //     try {
+        //         const refreshToken = localStorage.getItem('refreshToken');
+        //         const { data } = await axios.post('/api/auth/refresh', { refreshToken });
+        //         localStorage.setItem('token', data.token);
+        //         originalRequest.headers.Authorization = `Bearer ${data.token}`;
+        //         return apiClient(originalRequest);
+        //     } catch (refreshError) {
+        //         localStorage.clear();
+        //         window.location.href = '/signin';
+        //         return Promise.reject(refreshError);
+        //     }
+        // }
+        if (error.response?.status === 400) {
+            console.error('Bad Request');
+        }
+        if (error.response?.status === 401) {
+            console.error('Unauthorized');
         }
         if (error.response?.status === 403) {
             console.error('Access denied');
@@ -57,6 +63,7 @@ apiClient.interceptors.response.use(
         if (!error.response) {
             console.error('Network error. Check your connection');
         }
+        error.message = error.response?.data.statusText || error.message;
         return Promise.reject(error);
     },
 );

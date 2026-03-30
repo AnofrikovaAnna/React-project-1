@@ -1,4 +1,5 @@
 from fastapi import FastAPI, HTTPException
+from fastapi.responses import JSONResponse
 import sqlite3
 import hashlib
 from pydantic import BaseModel
@@ -35,7 +36,14 @@ def register(data: RegisterData):
     try:
         cursor.execute("SELECT id FROM users WHERE login = ?", (data.login,))
         if cursor.fetchone():
-            raise HTTPException(status_code=400, detail="Логин уже зарегистрирован")
+            return JSONResponse(
+                status_code=400,
+                content={
+                    "data": None,
+                    "status": 400,
+                    "statusText": "Логин уже зарегистрирован"
+                }
+            )
         
         cursor.execute("""
             INSERT INTO users (name, surname, login, password, is_auth)
@@ -57,7 +65,14 @@ def register(data: RegisterData):
         raise
     except Exception as e:
         conn.rollback()
-        raise HTTPException(500, str(e))
+        return JSONResponse(
+            status_code=500,
+            content={
+                "data": None,
+                "status": 500,
+                "statusText": "Ошибка сервера"
+            }
+        )
     finally:
         conn.close()
 
@@ -78,7 +93,14 @@ def login(data: LoginData):
         user = cursor.fetchone()
         
         if not user:
-            raise HTTPException(status_code=401, detail="Неверный логин или пароль")
+            return JSONResponse(
+                status_code=401,
+                content={
+                    "data": None,
+                    "status": 401,
+                    "statusText": "Неверный логин или пароль"
+                }
+            )
         
         cursor.execute("UPDATE users SET is_auth = 1 WHERE id = ?", (user[0],))
         conn.commit()
@@ -94,7 +116,14 @@ def login(data: LoginData):
     except HTTPException:
         raise
     except Exception as e:
-        raise HTTPException(500, str(e))
+        return JSONResponse(
+            status_code=500,
+            content={
+                "data": None,
+                "status": 500,
+                "statusText": "Ошибка сервера"
+            }
+        )
     finally:
         conn.close()
 
@@ -117,7 +146,14 @@ def logout(user_id: int):
     except HTTPException:
         raise
     except Exception as e:
-        raise HTTPException(500, str(e))
+        return JSONResponse(
+            status_code=500,
+            content={
+                "data": None,
+                "status": 500,
+                "statusText": "Ошибка сервера"
+            }
+        )
     finally:
         conn.close()
 
