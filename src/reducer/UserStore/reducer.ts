@@ -48,8 +48,11 @@ export const slice = createSlice({
             state.user.city = action.payload.city;
             state.user.studyPlace = action.payload.studyPlace;
         },
-        setId : (state, action: PayloadAction<number>) => {
+        setId: (state, action: PayloadAction<number>) => {
             state.id = action.payload;
+        },
+        setProtectedData: (state, action: PayloadAction<boolean>) => {
+            state.protectedData = action.payload;
         },
     },
 });

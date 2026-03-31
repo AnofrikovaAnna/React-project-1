@@ -6,6 +6,8 @@ const loginUser = async (login: string, password: string) => {
         'password': password,
     };
     const res = await apiClient.post('/signin', params);
+    const { token } = res.data;
+    localStorage.setItem('token', token);
     return res.data;
 };
 
@@ -17,8 +19,9 @@ const registerUser = async (login: string, name: string, surname: string, passwo
         'password': password,
     };
     const res = await apiClient.post('/signup', params);
+    const { token } = res.data;
+    localStorage.setItem('token', token);
     return res.data;
-    
 };
 
 const logoutUser = async (login: string) => {

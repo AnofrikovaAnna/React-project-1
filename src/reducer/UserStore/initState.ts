@@ -1,3 +1,5 @@
+import { NodeBuilderFlags } from "typescript";
+
 interface userStoreInterface {
     id: number;
     isAuth: boolean;
@@ -10,6 +12,7 @@ interface userStoreInterface {
         city: string;
         studyPlace: string;
     }
+    protectedData: boolean;
 }
 
 export const initialState : userStoreInterface = {
@@ -24,4 +27,5 @@ export const initialState : userStoreInterface = {
         city: 'город',
         studyPlace: 'место учебы',
     },
+    protectedData: false,
 };

@@ -34,12 +34,12 @@ export function makeCompetition (comp: {name: string, date: string, duration: nu
     };
 }
 
-export function getLastCompetition (usetId: number): ThunkAction<any, AppState, undefined, Action<string>> {
+export function getLastCompetition (userId: number): ThunkAction<any, AppState, undefined, Action<string>> {
     return async (dispatch) => {
         dispatch(setLoading('getCompetition'));
         try {
-            const data = await competitionService.getLastCompetition(usetId);
-            if (data.data !== null && data.data !== undefined)
+            const data = await competitionService.getLastCompetition(userId);
+            if (data.data !== null && data.data !== undefined){
                 dispatch(setCompetition({
                     name: data.data.name, 
                     date: data.data.date, 
@@ -48,6 +48,7 @@ export function getLastCompetition (usetId: number): ThunkAction<any, AppState, 
                 }));
                 dispatch(setId(data.data.id));
                 dispatch(setUserId(data.data.userId));
+            }
         } catch (error : any) {
             console.log(error.message);
             dispatch(setError({

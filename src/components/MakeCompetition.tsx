@@ -6,6 +6,7 @@ import { AppDispatch } from '../store';
 import { useDispatch, useSelector } from 'react-redux';
 import { makeCompetition } from '../utils/competitionThunks';
 import { userIdSelector } from '../reducer/UserStore/reducer';
+import { Navigate, useNavigate } from 'react-router-dom';
 
 
 interface CompetitionFormData {
@@ -18,6 +19,7 @@ interface CompetitionFormData {
 export const MakeCompetitionPage = () => {
     const dispatch = useDispatch<AppDispatch>();
     const userId = useSelector(userIdSelector);
+    const navigate = useNavigate();
 
     const [inputData, setInputData] = useState<CompetitionFormData>({
         name: '', date: '', duration: 0, numOfTasks: 0,
@@ -34,6 +36,7 @@ export const MakeCompetitionPage = () => {
         e.preventDefault();
         try{
             await dispatch(makeCompetition({...inputData, userId}));
+            navigate('/usercompetitions');
         } catch (error) {
             console.error(error);
         }
@@ -87,6 +90,10 @@ export const MakeCompetitionPage = () => {
                         placeholder='Продолжительность'
                         name='duration'
                         variant='outlined'
+                        inputProps={{
+                            pattern: "\\d+",
+                            title: "Только цифры"
+                        }}
                         onChange={handleChange}
                     />
                     <TextField 
@@ -94,6 +101,10 @@ export const MakeCompetitionPage = () => {
                         placeholder='Число задач'
                         name='numOfTasks'
                         variant='outlined'
+                        inputProps={{
+                            pattern: "\\d+",
+                            title: "Только цифры"
+                        }}
                         onChange={handleChange}
                     />
                     <Box sx={{

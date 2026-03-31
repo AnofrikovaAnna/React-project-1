@@ -4,6 +4,8 @@ import { userService } from '../service/UserService';
 import { AppState } from '../store';
 import { setError, clearLoading, setLoading } from "../reducer/SettingStore";
 import { clearCompetition } from "../reducer/CompetitionStore";
+import { pageService } from "../service/PageService";
+import { setProtectedData } from "../reducer/UserStore";
 
 export function loginUser(login: string, password: string): ThunkAction<any, AppState, undefined, Action<string>> {
     return async (dispatch) => {
@@ -14,6 +16,7 @@ export function loginUser(login: string, password: string): ThunkAction<any, App
             dispatch(setLogin(login));
             dispatch(setId(data.data.id));
         } catch (error : any) {
+            localStorage.removeItem("token");
             dispatch(setError({
                 name: error.message || 'Ошибка входа в систему',
                 num: error.status || 500,
@@ -36,7 +39,7 @@ export function registerUser(login: string, name: string, surname: string, passw
             dispatch(setSurname(surname));
             dispatch(setId(data.data.id));
         } catch (error : any) {
-            console.log(error.message);
+            localStorage.removeItem("token");
             dispatch(setError({
                 name: error.message || 'Ошибка регистрации',
                 num: error.status || 500,
@@ -55,6 +58,7 @@ export function logoutUser(login: string): ThunkAction<any, AppState, undefined,
             const data = await userService.logoutUser(login);
             dispatch(setIsAuth(false));
             dispatch(clearCompetition());
+            localStorage.removeItem("token");
         } catch (error : any) {
             dispatch(setError({
                 name: error.message || 'Ошибка выхода',
@@ -122,6 +126,7 @@ export function deleteUser(userId: number): ThunkAction<any, AppState, undefined
             const data = await userService.deleteUser(userId);
             dispatch(setIsAuth(false));
             dispatch(clearCompetition());
+            localStorage.removeItem("token");
         } catch (error : any) {
             dispatch(setError({
                 name: error.message || 'Ошибка выхода',

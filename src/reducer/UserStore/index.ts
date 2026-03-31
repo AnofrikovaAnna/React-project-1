@@ -11,6 +11,7 @@ export const {
     setStudyPlace,
     setUser,
     setId,
+    setProtectedData,
 } = slice.actions;
 
 export default slice.reducer;

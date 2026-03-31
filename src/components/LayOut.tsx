@@ -74,84 +74,87 @@ export const LayOutPage = () => {
                             <Typography sx={{ width: '25%' }}>Число задач</Typography>
                         </Box>
                     </ListItem>
-                    <ListItem key={competition.id}>
-                    <Box sx={{display: 'flex',
-                            flexDirection: 'row',
-                            gap: '30px',
-                            width:'100%',
-                            justifyContent: 'space-between',}}>
-                        <Typography sx={{ width: '25%' }}>{competition.name}</Typography>
-                        <Typography sx={{ width: '25%' }}>{competition.date}</Typography>
-                        <Typography sx={{ width: '25%' }}>{competition.duration}</Typography>
-                        <Typography sx={{ width: '25%' }}>{competition.numOfTasks}</Typography>
-                    </Box>
-                </ListItem>
-            </List> 
-            { competition.id === -1 ?
-                <></> :
-                <>
-                    {   isEditing ? 
-                        <>
-                            <Box sx = {{ margin: '80px 100px 40px',}}>
-                                <Stack spacing={1} sx={{ width: '100%',}}>
-                                    <TextField 
-                                        type='text' 
-                                        placeholder='Дата: ДД.MM.ГГ ЧЧ:MM'
-
-                                        value = {inputData}
-                                        name='login'
-                                        variant='outlined'
-                                        required
-                                        onChange={handleChange}
-                                        inputProps={{
-                                            pattern: '^(0[1-9]|[12][0-9]|3[01])\\.(0[1-9]|1[0-2])\\.\\d{2}\\s([01][0-9]|2[0-3]):([0-5][0-9])$',
-                                            title: "Формат: ДД.ММ.ГГ ЧЧ:ММ (пример: 25.12.24 14:30)"
-                                        }}
-                                    />
-                                    <Box sx={{
-                                        display: 'flex', 
-                                        gap: '100px',
-                                        justifyContent: 'center',
-                                        padding: '20px 0 0',
-                                    }}>
-                                        <Button 
-                                            variant='contained'
-                                            type='submit' 
-                                            onClick={handleSave}
-                                            sx={{
-                                                background: colors.primary.main,
-                                            }}>
-                                            Сохранить изменения
-                                        </Button>
-                                        <Button 
-                                            variant='contained'
-                                            type='submit' 
-                                            onClick={handleReject}
-                                            sx={{
-                                                background: colors.primary.main,
-                                            }}>
-                                            Отменить изменения
-                                        </Button>
-                                    </Box>
-                                </Stack>
+                    {   competition.id === -1 ?
+                        <></> :
+                        <ListItem >
+                            <Box sx={{display: 'flex',
+                                    flexDirection: 'row',
+                                    gap: '30px',
+                                    width:'100%',
+                                    justifyContent: 'space-between',}}>
+                                <Typography sx={{ width: '25%' }}>{competition.name}</Typography>
+                                <Typography sx={{ width: '25%' }}>{competition.date}</Typography>
+                                <Typography sx={{ width: '25%' }}>{competition.duration}</Typography>
+                                <Typography sx={{ width: '25%' }}>{competition.numOfTasks}</Typography>
                             </Box>
-                        </>
-                        :
-                        <>
-                            <Button 
-                                variant='contained'
-                                type='submit' 
-                                onClick={handleMove}
-                                sx={{
-                                    background: colors.primary.main,
-                                    margin: '20px 0 40px', 
-                                }}>
-                                Перенести соревнование
-                            </Button>
-                        </>
-                    }
-                </>
-            }
+                        </ListItem>
+                    }  
+                </List> 
+                { competition.id === -1 ?
+                    <></> :
+                    <>
+                        {   isEditing ? 
+                            <>
+                                <Box sx = {{ margin: '80px 100px 40px',}}>
+                                    <Stack spacing={1} sx={{ width: '100%',}}>
+                                        <TextField 
+                                            type='text' 
+                                            placeholder='Дата: ДД.MM.ГГ ЧЧ:MM'
+
+                                            value = {inputData}
+                                            name='login'
+                                            variant='outlined'
+                                            required
+                                            onChange={handleChange}
+                                            inputProps={{
+                                                pattern: '^(0[1-9]|[12][0-9]|3[01])\\.(0[1-9]|1[0-2])\\.\\d{2}\\s([01][0-9]|2[0-3]):([0-5][0-9])$',
+                                                title: "Формат: ДД.ММ.ГГ ЧЧ:ММ (пример: 25.12.24 14:30)"
+                                            }}
+                                        />
+                                        <Box sx={{
+                                            display: 'flex', 
+                                            gap: '100px',
+                                            justifyContent: 'center',
+                                            padding: '20px 0 0',
+                                        }}>
+                                            <Button 
+                                                variant='contained'
+                                                type='submit' 
+                                                onClick={handleSave}
+                                                sx={{
+                                                    background: colors.primary.main,
+                                                }}>
+                                                Сохранить изменения
+                                            </Button>
+                                            <Button 
+                                                variant='contained'
+                                                type='submit' 
+                                                onClick={handleReject}
+                                                sx={{
+                                                    background: colors.primary.main,
+                                                }}>
+                                                Отменить изменения
+                                            </Button>
+                                        </Box>
+                                    </Stack>
+                                </Box>
+                            </>
+                            :
+                            <>
+                                <Button 
+                                    variant='contained'
+                                    type='submit' 
+                                    onClick={handleMove}
+                                    sx={{
+                                        background: colors.primary.main,
+                                        margin: '20px 0 40px', 
+                                    }}>
+                                    Перенести соревнование
+                                </Button>
+                            </>
+                        }
+                    </>
+                }
             </Box>
         </Box>
     );

@@ -45,28 +45,28 @@ apiClient.interceptors.response.use(
         //         return Promise.reject(refreshError);
         //     }
         // }
-        if (error.response?.status === 400) {
-            console.error('Bad Request');
-        }
+        // if (error.response?.status === 400) {
+        //     console.error('Bad Request');
+        // }
         if (error.response?.status === 401) {
             if (error.response?.data.statusText === "Необходима авторизация"){
                 localStorage.removeItem('token');
                 window.location.href = '/signin';
             }
-            console.error('Unauthorized');
+            //console.error('Unauthorized');
         }
-        if (error.response?.status === 403) {
-            console.error('Access denied');
-        }
-        if (error.response?.status === 404) {
-            console.error('Resource not found');
-        }
-        if (error.response?.status >= 500) {
-            console.error('Server error. Please try later');
-        }
-        if (!error.response) {
-            console.error('Network error. Check your connection');
-        }
+        // if (error.response?.status === 403) {
+        //     console.error('Access denied');
+        // }
+        // if (error.response?.status === 404) {
+        //     console.error('Resource not found');
+        // }
+        // if (error.response?.status >= 500) {
+        //     console.error('Server error. Please try later');
+        // }
+        // if (!error.response) {
+        //     console.error('Network error. Check your connection');
+        // }
         error.message = error.response?.data.statusText || error.message;
         return Promise.reject(error);
     },

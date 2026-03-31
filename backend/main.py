@@ -1,4 +1,4 @@
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI, HTTPException, Depends  
 from fastapi.responses import JSONResponse
 import sqlite3
 import hashlib
@@ -660,10 +660,13 @@ def get_last_user_competition(user_id: int):
     finally:
         conn.close()
 
+from fastapi.security import HTTPBearer
+security = HTTPBearer()
 
 @app.get("/api/protected")
-def protected_page(token: str = None):
-    if not token:
+async def protected_page(credentials: HTTPBearer = Depends(security)):
+    token = credentials.credentials
+    if not token or token == "":
         return JSONResponse(
             status_code=401,
             content={
@@ -672,7 +675,7 @@ def protected_page(token: str = None):
                     "statusText": "Необходима авторизация"
                 }
         )
-    return {"data": "OK"}
+    return {"data": None, "status" : 200, "statusText": "OK"}
 
 
 if __name__ == "__main__":

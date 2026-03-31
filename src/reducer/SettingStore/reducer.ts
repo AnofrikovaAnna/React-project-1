@@ -21,6 +21,8 @@ export const slice = createSlice({
             state.isError = true;
             state.errorName = action.payload.name;
             state.errorNum = action.payload.num;
+            const error = new Error(state.errorName);
+            console.error(error);
         },
         setLoading: (state, action: PayloadAction<string>) => {
             state.isLoading = true;

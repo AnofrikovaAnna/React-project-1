@@ -123,6 +123,10 @@ export const ProfilePage = () => {
                                 value = {inputData.age.toString()}
                                 name='age' 
                                 variant='outlined'
+                                inputProps={{
+                                    pattern: "\\d+",
+                                    title: "Только цифры"
+                                }}
                                 onChange={handleChange}
                             />
                             <TextField 

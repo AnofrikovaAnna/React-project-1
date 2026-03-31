@@ -9,6 +9,7 @@ import { MakeCompetitionPage } from './components/MakeCompetition';
 import { CompetitionPage } from './components/Competitions';
 import { UserCompetitionPage } from './components/UserCompetition';
 import { NotFoundedPage } from './components/NotFounded';
+import { ProtectedRoute } from './components/ProtectedRoute';
 import { AuthWrapper } from './components/AuthWrapper';
 import { CommonWrapper } from './components/CommonWrapper'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
@@ -26,11 +27,11 @@ function App() {
                 <Route path='/' element={<HomePage />} />
                 <Route path='/signin' element={<SignInPage />} />
                 <Route path='/signup' element={<SignUpPage />} />
-                <Route path='/dashboard' element={<LayOutPage />} />
-                <Route path='/profile' element={<ProfilePage />} />
-                <Route path='/newcompetition' element={<MakeCompetitionPage />} />
-                <Route path='/competitions' element={<CompetitionPage />} />
-                <Route path='/usercompetitions' element={<UserCompetitionPage />} />
+                <Route path='/dashboard' element={<ProtectedRoute><LayOutPage /></ProtectedRoute>} />
+                <Route path='/profile' element={<ProtectedRoute><ProfilePage /></ProtectedRoute>} />
+                <Route path='/newcompetition' element={<ProtectedRoute><MakeCompetitionPage /></ProtectedRoute>} />
+                <Route path='/competitions' element={<ProtectedRoute><CompetitionPage /></ProtectedRoute>} />
+                <Route path='/usercompetitions' element={<ProtectedRoute><UserCompetitionPage /></ProtectedRoute>} />
                 <Route path="*" element={<NotFoundedPage />} />
               </Routes>
             </Router>
