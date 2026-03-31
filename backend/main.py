@@ -238,7 +238,10 @@ def update_user_by_login(login: str, data: User):
             )
         
         cursor.execute("SELECT id FROM users WHERE login = ?", (data.login,))
-        if cursor.fetchone():
+
+        id = cursor.fetchone()
+
+        if id and id[0] != data.id:
             return JSONResponse(
                 status_code=400,
                 content={
@@ -467,7 +470,7 @@ def get_all_competitions():
             """
             SELECT id, name, date, num_of_tasks, duration, is_ended, user_id
             FROM competitions
-            ORDER BY id
+            ORDER BY id DESC
             """
         )
         rows = cursor.fetchall()
@@ -515,7 +518,7 @@ def get_all_competitions(id: int):
             SELECT id, name, date, num_of_tasks, duration, is_ended, user_id
             FROM competitions
             WHERE user_id = ?
-            ORDER BY id
+            ORDER BY id DESC
             """,
             (id,)
         )
@@ -596,6 +599,80 @@ def update_competition_time(id:int, date: Date):
         )
     finally:
         conn.close()
+
+@app.get("/api/user/{user_id}/lastcomp")
+def get_last_user_competition(user_id: int):
+    conn = sqlite3.connect('database.db')
+    cursor = conn.cursor()
+    
+    try:
+        cursor.execute("SELECT id FROM users WHERE id = ?", (user_id,))
+        if not cursor.fetchone():
+            return JSONResponse(
+                status_code=404,
+                content={
+                    "data": None,
+                    "status": 404,
+                    "statusText": "Пользователь не найден"
+                }
+            )
+        
+        cursor.execute("""
+            SELECT id, name, date, num_of_tasks, duration, is_ended, user_id
+            FROM competitions
+            WHERE user_id = ?
+            ORDER BY id DESC
+            LIMIT 1
+        """, (user_id,))
+        
+        row = cursor.fetchone()
+
+        competition = None
+        statusText = "Соревнование не найдено"
+        
+        if row:
+            competition = {
+                "id": row[0],
+                "name": row[1],
+                "date": row[2],
+                "numOfTasks": row[3],
+                "duration": row[4],
+                "isEnded": bool(row[5]),
+                "userId": row[6]
+            }
+            statusText = "Последнее соревнование успешно получено"
+        
+        return {
+            "data": competition,
+            "status": 200,
+            "statusText": statusText
+        }
+        
+    except Exception as e:
+        return JSONResponse(
+            status_code=500,
+            content={
+                "data": None,
+                "status": 500,
+                "statusText": f"Ошибка на сервере: {str(e)}"
+            }
+        )
+    finally:
+        conn.close()
+
+
+@app.get("/api/protected")
+def protected_page(token: str = None):
+    if not token:
+        return JSONResponse(
+            status_code=401,
+            content={
+                    "data": None,
+                    "status": 401,
+                    "statusText": "Необходима авторизация"
+                }
+        )
+    return {"data": "OK"}
 
 
 if __name__ == "__main__":

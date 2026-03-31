@@ -49,6 +49,10 @@ apiClient.interceptors.response.use(
             console.error('Bad Request');
         }
         if (error.response?.status === 401) {
+            if (error.response?.data.statusText === "Необходима авторизация"){
+                localStorage.removeItem('token');
+                window.location.href = '/signin';
+            }
             console.error('Unauthorized');
         }
         if (error.response?.status === 403) {

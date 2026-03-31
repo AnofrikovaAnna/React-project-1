@@ -2,7 +2,7 @@ import { Action, ThunkAction } from "@reduxjs/toolkit";
 import { competitionService } from '../service/CompetitionService';
 import { AppState } from '../store';
 import { setError, clearLoading, setLoading } from "../reducer/SettingStore";
-import { setCompetition, setDate, setDuration, setId, setName, setNumOfTasks, setUserId } from "../reducer/CompetitionStore";
+import { clearCompetition, setCompetition, setDate, setDuration, setId, setName, setNumOfTasks, setUserId } from "../reducer/CompetitionStore";
 import { addCompetition as addUserCompetition, clearCompetition as clearUserCompetition } from "../reducer/UserCompetitionStore";
 import { addCompetition as addAllCompetition, clearCompetition as clearAllCompetition } from "../reducer/AllCompetitionStore";
 import { competitionStoreInterface } from "../reducer/CompetitionStore/initState";
@@ -12,6 +12,7 @@ export function makeCompetition (comp: {name: string, date: string, duration: nu
         dispatch(setLoading('makeCompetition'));
         try {
             const data = await competitionService.makeCompetition(comp);
+            dispatch(clearCompetition());
             dispatch(setCompetition({
                 name: comp.name, 
                 date: comp.date, 
@@ -20,7 +21,6 @@ export function makeCompetition (comp: {name: string, date: string, duration: nu
             }));
             dispatch(setId(data.data.id));
             dispatch(setUserId(comp.userId));
-            //dispatch(addUserCompetition({...comp, ["id"] : data.data.id, ["isEnded"] : false}));
         } catch (error : any) {
             console.log(error.message);
             dispatch(setError({
@@ -34,17 +34,20 @@ export function makeCompetition (comp: {name: string, date: string, duration: nu
     };
 }
 
-export function getCompetition (id: number): ThunkAction<any, AppState, undefined, Action<string>> {
+export function getLastCompetition (usetId: number): ThunkAction<any, AppState, undefined, Action<string>> {
     return async (dispatch) => {
         dispatch(setLoading('getCompetition'));
         try {
-            const data = await competitionService.getCompetition(id);
-            dispatch(setCompetition({
-                name: data.data.name, 
-                date: data.data.date, 
-                duration: data.data.duration, 
-                numOfTasks: data.data.numOfTasks
-            }));
+            const data = await competitionService.getLastCompetition(usetId);
+            if (data.data !== null && data.data !== undefined)
+                dispatch(setCompetition({
+                    name: data.data.name, 
+                    date: data.data.date, 
+                    duration: data.data.duration, 
+                    numOfTasks: data.data.numOfTasks
+                }));
+                dispatch(setId(data.data.id));
+                dispatch(setUserId(data.data.userId));
         } catch (error : any) {
             console.log(error.message);
             dispatch(setError({

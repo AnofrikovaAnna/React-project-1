@@ -11,7 +11,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { getUser, loginUser } from '../utils/userThunks';
 import { AppDispatch } from '../store';
-import { userAuthSelector } from '../reducer/UserStore/reducer';
+import { userAuthSelector, userIdSelector } from '../reducer/UserStore/reducer';
+import { getLastCompetition } from '../utils/competitionThunks';
 
 interface InputFormData {
     login: string, 
@@ -22,6 +23,8 @@ export const SignInPage = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch<AppDispatch>();
     const isAuth = useSelector(userAuthSelector);
+    const userId = useSelector(userIdSelector);
+
     const [inputData, setInputData] = useState<InputFormData>({
         login: '', password: '',
     });
@@ -44,6 +47,8 @@ export const SignInPage = () => {
         if (isAuth) {
             navigate('/dashboard');
             dispatch(getUser(inputData.login));
+            if (userId != -1)
+                dispatch(getLastCompetition(userId));
         }
     }, [isAuth, navigate]);
 

@@ -13,8 +13,8 @@ const makeCompetition = async (comp: {name: string, date: string, duration: numb
     
 };
 
-const getCompetition = async (id: number) => {
-    const res = await apiClient.get(`/getcomp${id}`);
+const getLastCompetition = async (userId: number) => {
+    const res = await apiClient.get(`/user/${userId}/lastcomp`);
     return res.data;
 };
 
@@ -29,14 +29,13 @@ const getAllCompetition = async () => {
 };
 
 const moveCompetition = async (id: number, date: string) => {
-    console.log(id, date);
     const res = await apiClient.patch(`/comp/${id}/changedate`, { "date": date });
     return res.data;
 };
 
 export const competitionService = {
     makeCompetition,
-    getCompetition,
+    getLastCompetition,
     getUserCompetition,
     getAllCompetition,
     moveCompetition,

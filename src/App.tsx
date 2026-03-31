@@ -8,6 +8,7 @@ import { ProfilePage } from './components/Profile';
 import { MakeCompetitionPage } from './components/MakeCompetition';
 import { CompetitionPage } from './components/Competitions';
 import { UserCompetitionPage } from './components/UserCompetition';
+import { NotFoundedPage } from './components/NotFounded';
 import { AuthWrapper } from './components/AuthWrapper';
 import { CommonWrapper } from './components/CommonWrapper'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
@@ -30,7 +31,7 @@ function App() {
                 <Route path='/newcompetition' element={<MakeCompetitionPage />} />
                 <Route path='/competitions' element={<CompetitionPage />} />
                 <Route path='/usercompetitions' element={<UserCompetitionPage />} />
-                <Route path="*" element={<div>Страница не найдена</div>} />
+                <Route path="*" element={<NotFoundedPage />} />
               </Routes>
             </Router>
           </AuthWrapper>
